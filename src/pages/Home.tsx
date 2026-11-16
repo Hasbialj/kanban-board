@@ -14,15 +14,9 @@ import {
   IonIcon,
   IonButtons,
   IonButton,
-  IonPopover,
-  IonList,
-  IonItem,
-  IonBadge,
 } from '@ionic/react';
 import {
   addOutline,
-  filterOutline,
-  checkmarkOutline,
 } from 'ionicons/icons';
 import {
   DndContext,
@@ -36,7 +30,7 @@ import {
   DragOverlay,
   closestCorners,
 } from '@dnd-kit/core';
-import { arrayMove } from '@dnd-kit/sortable';
+
 import { COLUMNS, ColumnId, Task } from '../types/kanban';
 import { useKanban } from '../hooks/useKanban';
 import KanbanColumn from '../components/KanbanColumn';
@@ -55,9 +49,6 @@ const Home: React.FC = () => {
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
   const [defaultColumn, setDefaultColumn] = useState<ColumnId>('todo');
   const [activeTask, setActiveTask] = useState<Task | null>(null);
-  const [filterPopoverOpen, setFilterPopoverOpen] = useState(false);
-  const [filterEvent, setFilterEvent] = useState<Event | null>(null);
-
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 8 } }),
     useSensor(TouchSensor, { activationConstraint: { delay: 200, tolerance: 6 } })
@@ -156,11 +147,6 @@ const Home: React.FC = () => {
     }
   };
 
-  const openFilterPopover = (e: React.MouseEvent) => {
-    setFilterEvent(e.nativeEvent);
-    setFilterPopoverOpen(true);
-  };
-
   const totalTasks = tasks.length;
   const doneTasks = tasks.filter((t) => t.columnId === 'done').length;
 
@@ -175,11 +161,8 @@ const Home: React.FC = () => {
             </div>
           </IonTitle>
           <IonButtons slot="end">
-            <IonButton onClick={openFilterPopover}>
-              <IonIcon icon={filterOutline} />
-              {priorityFilter !== 'all' && (
-                <IonBadge color="danger" className="filter-badge">1</IonBadge>
-              )}
+            <IonButton onClick={() => handleAddTask('todo')}>
+              <IonIcon icon={addOutline} />
             </IonButton>
           </IonButtons>
         </IonToolbar>
@@ -194,30 +177,28 @@ const Home: React.FC = () => {
           />
         </IonToolbar>
 
-        {priorityFilter !== 'all' && (
-          <IonToolbar className="filter-bar">
-            <IonSegment
-              value={priorityFilter}
-              onIonChange={(e) => setPriorityFilter(e.detail.value as PriorityFilter)}
-            >
-              <IonSegmentButton value="all">
-                <IonLabel>All</IonLabel>
-              </IonSegmentButton>
-              <IonSegmentButton value="high">
-                <IonLabel>High</IonLabel>
-              </IonSegmentButton>
-              <IonSegmentButton value="medium">
-                <IonLabel>Medium</IonLabel>
-              </IonSegmentButton>
-              <IonSegmentButton value="low">
-                <IonLabel>Low</IonLabel>
-              </IonSegmentButton>
-            </IonSegment>
-          </IonToolbar>
-        )}
+        <IonToolbar className="filter-bar">
+          <IonSegment
+            value={priorityFilter}
+            onIonChange={(e) => setPriorityFilter(e.detail.value as PriorityFilter)}
+          >
+            <IonSegmentButton value="all">
+              <IonLabel>All</IonLabel>
+            </IonSegmentButton>
+            <IonSegmentButton value="high">
+              <IonLabel>🔴 High</IonLabel>
+            </IonSegmentButton>
+            <IonSegmentButton value="medium">
+              <IonLabel>🟡 Medium</IonLabel>
+            </IonSegmentButton>
+            <IonSegmentButton value="low">
+              <IonLabel>🟢 Low</IonLabel>
+            </IonSegmentButton>
+          </IonSegment>
+        </IonToolbar>
       </IonHeader>
 
-      <IonContent className="board-content" scrollX>
+      <IonContent className="board-content" scrollX={true} scrollY={false}>
         <DndContext
           sensors={sensors}
           collisionDetection={closestCorners}
@@ -252,29 +233,6 @@ const Home: React.FC = () => {
           <IonIcon icon={addOutline} />
         </IonFabButton>
       </IonFab>
-
-      {/* Filter Popover */}
-      <IonPopover
-        isOpen={filterPopoverOpen}
-        event={filterEvent as Event}
-        onDidDismiss={() => setFilterPopoverOpen(false)}
-      >
-        <IonList>
-          {(['all', 'high', 'medium', 'low'] as PriorityFilter[]).map((p) => (
-            <IonItem
-              key={p}
-              button
-              onClick={() => {
-                setPriorityFilter(p);
-                setFilterPopoverOpen(false);
-              }}
-            >
-              <IonLabel style={{ textTransform: 'capitalize' }}>{p === 'all' ? 'All Priorities' : p}</IonLabel>
-              {priorityFilter === p && <IonIcon icon={checkmarkOutline} slot="end" color="primary" />}
-            </IonItem>
-          ))}
-        </IonList>
-      </IonPopover>
 
       {/* Task Modal */}
       <TaskModal
