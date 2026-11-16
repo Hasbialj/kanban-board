@@ -10,17 +10,6 @@
   font-weight: 400;
 }
 
-.filter-badge {
-  position: absolute;
-  top: 4px;
-  right: 4px;
-  font-size: 0.6rem;
-  min-width: 14px;
-  height: 14px;
-  padding: 0 3px;
-  border-radius: 7px;
-}
-
 .filter-bar {
   --background: var(--ion-color-light);
 }
@@ -33,21 +22,26 @@
 
 .board-content {
   --background: #f0f4f8;
-  --overflow: auto;
+}
+
+/* Wrapper untuk horizontal scroll — Ionic IonContent scroll via inner div */
+.board-scroll-wrapper {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  padding: 16px;
+  min-height: calc(100vh - 210px);
+  align-items: flex-start;
+  width: max-content;
+  min-width: 100%;
+  box-sizing: border-box;
 }
 
 .board-container {
   display: flex;
   flex-direction: row;
   gap: 16px;
-  padding: 16px;
-  height: 100%;
   align-items: flex-start;
-  width: max-content;
-  min-width: 100%;
-  overflow-x: auto;
-  overflow-y: hidden;
-  box-sizing: border-box;
 }
 
 .drag-overlay-card {
@@ -55,17 +49,18 @@
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
   pointer-events: none;
+  width: 280px;
 }
 
-/* Mobile: horizontal scroll */
+/* Mobile */
 @media (max-width: 768px) {
-  .board-container {
+  .board-scroll-wrapper {
     padding: 12px;
     gap: 12px;
   }
 }
 
-/* Dark mode support */
+/* Dark mode */
 @media (prefers-color-scheme: dark) {
   .board-content {
     --background: #1a1a2e;

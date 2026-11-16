@@ -198,35 +198,36 @@ const Home: React.FC = () => {
         </IonToolbar>
       </IonHeader>
 
-      <IonContent className="board-content" scrollX={true} scrollY={false}>
-        <DndContext
-          sensors={sensors}
-          collisionDetection={closestCorners}
-          onDragStart={handleDragStart}
-          onDragOver={handleDragOver}
-          onDragEnd={handleDragEnd}
-        >
-          <div className="board-container">
-            {COLUMNS.map((column) => (
-              <KanbanColumn
-                key={column.id}
-                column={column}
-                tasks={getColumnTasks(column.id)}
-                onAddTask={handleAddTask}
-                onTaskClick={handleTaskClick}
-              />
-            ))}
-          </div>
+      <IonContent className="board-content">
+        <div className="board-scroll-wrapper">
+          <DndContext
+            sensors={sensors}
+            collisionDetection={closestCorners}
+            onDragStart={handleDragStart}
+            onDragOver={handleDragOver}
+            onDragEnd={handleDragEnd}
+          >
+            <div className="board-container">
+              {COLUMNS.map((column) => (
+                <KanbanColumn
+                  key={column.id}
+                  column={column}
+                  tasks={getColumnTasks(column.id)}
+                  onAddTask={handleAddTask}
+                  onTaskClick={handleTaskClick}
+                />
+              ))}
+            </div>
 
-          <DragOverlay>
-            {activeTask && (
-              <div className="drag-overlay-card">
-                <TaskCard task={activeTask} onClick={() => {}} />
-              </div>
-            )}
-          </DragOverlay>
-        </DndContext>
-      </IonContent>
+            <DragOverlay>
+              {activeTask && (
+                <div className="drag-overlay-card">
+                  <TaskCard task={activeTask} onClick={() => {}} />
+                </div>
+              )}
+            </DragOverlay>
+          </DndContext>
+        </div>      </IonContent>
 
       <IonFab vertical="bottom" horizontal="end" slot="fixed">
         <IonFabButton color="primary" onClick={() => handleAddTask('todo')}>

@@ -127,19 +127,19 @@ export function useKanban() {
 
   const reorderTasks = (taskId: string, overId: string, overColumnId: ColumnId) => {
     setTasks((prev) => {
-      const taskIndex = prev.findIndex((t) => t.id === taskId);
-      if (taskIndex === -1) return prev;
-
-      const updatedTasks = prev.map((t) =>
+      // First move the task to the target column
+      const withUpdatedColumn = prev.map((t) =>
         t.id === taskId ? { ...t, columnId: overColumnId } : t
       );
 
-      const fromIndex = updatedTasks.findIndex((t) => t.id === taskId);
-      const toIndex = updatedTasks.findIndex((t) => t.id === overId);
+      const fromIndex = withUpdatedColumn.findIndex((t) => t.id === taskId);
+      const toIndex = withUpdatedColumn.findIndex((t) => t.id === overId);
 
-      if (fromIndex === -1 || toIndex === -1 || fromIndex === toIndex) return updatedTasks;
+      if (fromIndex === -1 || toIndex === -1 || fromIndex === toIndex) {
+        return withUpdatedColumn;
+      }
 
-      const result = [...updatedTasks];
+      const result = [...withUpdatedColumn];
       const [removed] = result.splice(fromIndex, 1);
       result.splice(toIndex, 0, removed);
       return result;
