@@ -1,0 +1,120 @@
+.task-modal {
+  --height: 90%;
+  --border-radius: 16px 16px 0 0;
+}
+
+.task-view {
+  padding: 8px 0;
+}
+
+.task-view-header h2 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin: 0 0 8px 0;
+  color: var(--ion-text-color);
+}
+
+.task-view-meta {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.task-view-desc {
+  color: var(--ion-color-medium);
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+
+.task-column-info {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 16px;
+  font-size: 0.9rem;
+  color: var(--ion-color-medium);
+}
+
+.subtask-section {
+  margin-top: 16px;
+}
+
+.subtask-header {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 600;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+}
+
+.subtask-list {
+  margin-top: 8px;
+}
+
+.subtask-item {
+  --padding-start: 0;
+  --inner-padding-end: 0;
+}
+
+.subtask-done {
+  text-decoration: line-through;
+  color: var(--ion-color-medium);
+}
+
+.form-item {
+  --background: var(--ion-color-light);
+  border-radius: 8px;
+  margin-bottom: 10px;
+  --padding-start: 12px;
+  --inner-padding-end: 12px;
+}
+
+.subtask-editor {
+  margin-top: 16px;
+  padding: 12px;
+  background: var(--ion-color-light);
+  border-radius: 8px;
+}
+
+.subtask-editor-title {
+  font-weight: 600;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+}
+
+.subtask-progress {
+  margin-bottom: 4px;
+}
+
+.subtask-count {
+  font-size: 0.8rem;
+  color: var(--ion-color-medium);
+  margin: 4px 0 8px 0;
+}
+
+.subtask-add-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-top: 8px;
+}
+
+.subtask-input {
+  flex: 1;
+  --background: white;
+  --padding-start: 10px;
+  border-radius: 6px;
+  border: 1px solid var(--ion-color-light-shade);
+}
+
+.form-actions {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.task-form {
+  padding-bottom: 24px;
+}

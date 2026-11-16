@@ -1,0 +1,116 @@
+.task-card {
+  margin: 0 0 10px 0;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  transition: box-shadow 0.2s, transform 0.1s;
+  border-left: 4px solid transparent;
+  position: relative;
+  overflow: visible;
+}
+
+.task-card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.14);
+  transform: translateY(-1px);
+}
+
+.task-card.priority-high {
+  border-left-color: var(--ion-color-danger);
+}
+
+.task-card.priority-medium {
+  border-left-color: var(--ion-color-warning);
+}
+
+.task-card.priority-low {
+  border-left-color: var(--ion-color-success);
+}
+
+.drag-handle {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 8px 8px 0 8px;
+  cursor: grab;
+  width: fit-content;
+}
+
+.drag-handle:active {
+  cursor: grabbing;
+}
+
+.drag-handle span {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: var(--ion-color-medium-shade);
+  border-radius: 2px;
+}
+
+.task-card-content {
+  padding: 8px 12px 12px 12px !important;
+}
+
+.task-card-top {
+  margin-bottom: 8px;
+}
+
+.task-card-title {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--ion-text-color);
+  line-height: 1.3;
+}
+
+.task-card-badges {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+
+.priority-badge {
+  font-size: 0.7rem;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  text-transform: capitalize;
+}
+
+.label-badge {
+  font-size: 0.7rem;
+  color: var(--ion-color-medium-shade);
+}
+
+.task-card-desc {
+  font-size: 0.8rem;
+  color: var(--ion-color-medium);
+  margin: 4px 0 8px 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 1.4;
+}
+
+.task-card-subtasks {
+  margin-top: 8px;
+}
+
+.subtask-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.78rem;
+  color: var(--ion-color-medium);
+  margin-bottom: 4px;
+}
+
+.subtask-icon {
+  font-size: 0.9rem;
+}
+
+.card-progress {
+  border-radius: 4px;
+  height: 4px;
+}
