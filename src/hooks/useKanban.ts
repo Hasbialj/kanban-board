@@ -4,79 +4,81 @@ import { Task, ColumnId } from '../types/kanban';
 
 const STORAGE_KEY = 'kanban_tasks';
 
-const DEFAULT_TASKS: Task[] = [
-  {
-    id: uuidv4(),
-    title: 'Setup project repository',
-    description: 'Initialize Git repo and push to GitHub',
-    columnId: 'done',
-    priority: 'high',
-    label: 'DevOps',
-    subtasks: [
-      { id: uuidv4(), title: 'Create GitHub repo', completed: true },
-      { id: uuidv4(), title: 'Push initial commit', completed: true },
-    ],
-    createdAt: new Date().toISOString(),
-  },
-  {
-    id: uuidv4(),
-    title: 'Design UI mockup',
-    description: 'Create wireframes for the Kanban board layout',
-    columnId: 'doing',
-    priority: 'medium',
-    label: 'Design',
-    subtasks: [
-      { id: uuidv4(), title: 'Sketch board layout', completed: true },
-      { id: uuidv4(), title: 'Choose color scheme', completed: false },
-    ],
-    createdAt: new Date().toISOString(),
-  },
-  {
-    id: uuidv4(),
-    title: 'Implement drag and drop',
-    description: 'Use @dnd-kit to handle drag between columns',
-    columnId: 'todo',
-    priority: 'high',
-    label: 'Feature',
-    subtasks: [
-      { id: uuidv4(), title: 'Install dnd-kit', completed: false },
-      { id: uuidv4(), title: 'Create DragContext', completed: false },
-      { id: uuidv4(), title: 'Test cross-column drag', completed: false },
-    ],
-    createdAt: new Date().toISOString(),
-  },
-  {
-    id: uuidv4(),
-    title: 'Write unit tests',
-    description: 'Cover main hooks and components with tests',
-    columnId: 'review',
-    priority: 'low',
-    label: 'Testing',
-    subtasks: [],
-    createdAt: new Date().toISOString(),
-  },
-  {
-    id: uuidv4(),
-    title: 'Fix mobile responsiveness',
-    description: 'Column overflow on small screens needs fix',
-    columnId: 'rework',
-    priority: 'medium',
-    label: 'Bug',
-    subtasks: [
-      { id: uuidv4(), title: 'Test on iPhone SE', completed: false },
-      { id: uuidv4(), title: 'Fix horizontal scroll', completed: false },
-    ],
-    createdAt: new Date().toISOString(),
-  },
-];
+function getDefaultTasks(): Task[] {
+  return [
+    {
+      id: uuidv4(),
+      title: 'Setup project repository',
+      description: 'Initialize Git repo and push to GitHub',
+      columnId: 'done',
+      priority: 'high',
+      label: 'DevOps',
+      subtasks: [
+        { id: uuidv4(), title: 'Create GitHub repo', completed: true },
+        { id: uuidv4(), title: 'Push initial commit', completed: true },
+      ],
+      createdAt: new Date().toISOString(),
+    },
+    {
+      id: uuidv4(),
+      title: 'Design UI mockup',
+      description: 'Create wireframes for the Kanban board layout',
+      columnId: 'doing',
+      priority: 'medium',
+      label: 'Design',
+      subtasks: [
+        { id: uuidv4(), title: 'Sketch board layout', completed: true },
+        { id: uuidv4(), title: 'Choose color scheme', completed: false },
+      ],
+      createdAt: new Date().toISOString(),
+    },
+    {
+      id: uuidv4(),
+      title: 'Implement drag and drop',
+      description: 'Use @dnd-kit to handle drag between columns',
+      columnId: 'todo',
+      priority: 'high',
+      label: 'Feature',
+      subtasks: [
+        { id: uuidv4(), title: 'Install dnd-kit', completed: false },
+        { id: uuidv4(), title: 'Create DragContext', completed: false },
+        { id: uuidv4(), title: 'Test cross-column drag', completed: false },
+      ],
+      createdAt: new Date().toISOString(),
+    },
+    {
+      id: uuidv4(),
+      title: 'Write unit tests',
+      description: 'Cover main hooks and components with tests',
+      columnId: 'review',
+      priority: 'low',
+      label: 'Testing',
+      subtasks: [],
+      createdAt: new Date().toISOString(),
+    },
+    {
+      id: uuidv4(),
+      title: 'Fix mobile responsiveness',
+      description: 'Column overflow on small screens needs fix',
+      columnId: 'rework',
+      priority: 'medium',
+      label: 'Bug',
+      subtasks: [
+        { id: uuidv4(), title: 'Test on iPhone SE', completed: false },
+        { id: uuidv4(), title: 'Fix horizontal scroll', completed: false },
+      ],
+      createdAt: new Date().toISOString(),
+    },
+  ];
+}
 
 export function useKanban() {
   const [tasks, setTasks] = useState<Task[]>(() => {
     try {
       const stored = localStorage.getItem(STORAGE_KEY);
-      return stored ? JSON.parse(stored) : DEFAULT_TASKS;
+      return stored ? JSON.parse(stored) : getDefaultTasks();
     } catch {
-      return DEFAULT_TASKS;
+      return getDefaultTasks();
     }
   });
 

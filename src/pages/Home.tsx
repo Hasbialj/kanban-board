@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useRef } from 'react';
 import {
   IonPage,
   IonHeader,
@@ -49,6 +49,7 @@ const Home: React.FC = () => {
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
   const [defaultColumn, setDefaultColumn] = useState<ColumnId>('todo');
   const [activeTask, setActiveTask] = useState<Task | null>(null);
+  const lastOverColumnRef = useRef<string | null>(null);
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 8 } }),
     useSensor(TouchSensor, { activationConstraint: { delay: 200, tolerance: 6 } })
@@ -91,6 +92,7 @@ const Home: React.FC = () => {
   const handleDragStart = (event: DragStartEvent) => {
     const task = tasks.find((t) => t.id === event.active.id);
     setActiveTask(task ?? null);
+    lastOverColumnRef.current = task?.columnId ?? null;
   };
 
   const handleDragOver = (event: DragOverEvent) => {
@@ -99,29 +101,29 @@ const Home: React.FC = () => {
 
     const activeId = active.id as string;
     const overId = over.id as string;
-
     if (activeId === overId) return;
 
-    const activeTask = tasks.find((t) => t.id === activeId);
-    if (!activeTask) return;
+    const draggedTask = tasks.find((t) => t.id === activeId);
+    if (!draggedTask) return;
 
-    // Dropped over a column
+    // Determine target column
     const overColumn = COLUMNS.find((c) => c.id === overId);
-    if (overColumn && activeTask.columnId !== overColumn.id) {
-      moveTask(activeId, overColumn.id);
-      return;
-    }
-
-    // Dropped over another task
     const overTask = tasks.find((t) => t.id === overId);
-    if (overTask && activeTask.columnId !== overTask.columnId) {
-      moveTask(activeId, overTask.columnId);
+    const targetColumnId = overColumn?.id ?? overTask?.columnId;
+
+    if (!targetColumnId) return;
+
+    // Only call moveTask if column actually changed — prevents infinite re-render
+    if (targetColumnId !== lastOverColumnRef.current) {
+      lastOverColumnRef.current = targetColumnId;
+      moveTask(activeId, targetColumnId as ColumnId);
     }
   };
 
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
     setActiveTask(null);
+    lastOverColumnRef.current = null;
 
     if (!over) return;
 
@@ -227,7 +229,8 @@ const Home: React.FC = () => {
               )}
             </DragOverlay>
           </DndContext>
-        </div>      </IonContent>
+        </div>
+      </IonContent>
 
       <IonFab vertical="bottom" horizontal="end" slot="fixed">
         <IonFabButton color="primary" onClick={() => handleAddTask('todo')}>
