@@ -18,6 +18,7 @@ import {
   IonIcon,
   IonBadge,
   IonProgressBar,
+  IonAlert,
 } from '@ionic/react';
 import { addOutline, trashOutline, closeOutline } from 'ionicons/icons';
 import { v4 as uuidv4 } from 'uuid';
@@ -57,6 +58,7 @@ const TaskModal: React.FC<Props> = ({
   const [subtasks, setSubtasks] = useState<Subtask[]>([]);
   const [newSubtask, setNewSubtask] = useState('');
   const [viewMode, setViewMode] = useState(false);
+  const [showDeleteAlert, setShowDeleteAlert] = useState(false);
 
   useEffect(() => {
     if (task) {
@@ -114,6 +116,10 @@ const TaskModal: React.FC<Props> = ({
   };
 
   const handleDelete = () => {
+    setShowDeleteAlert(true);
+  };
+
+  const confirmDelete = () => {
     if (task && onDelete) {
       onDelete(task.id);
       onClose();
@@ -312,6 +318,17 @@ const TaskModal: React.FC<Props> = ({
           </div>
         )}
       </IonContent>
+
+      <IonAlert
+        isOpen={showDeleteAlert}
+        onDidDismiss={() => setShowDeleteAlert(false)}
+        header="Hapus Task?"
+        message={`Task "${task?.title}" akan dihapus permanen.`}
+        buttons={[
+          { text: 'Batal', role: 'cancel' },
+          { text: 'Hapus', role: 'destructive', handler: confirmDelete },
+        ]}
+      />
     </IonModal>
   );
 };
