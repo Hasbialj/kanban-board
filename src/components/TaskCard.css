@@ -10,6 +10,9 @@
   overflow: hidden;
   transition: box-shadow 0.2s, transform 0.15s;
   cursor: default;
+  touch-action: none; /* penting untuk touch drag di mobile */
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .task-card-wrapper:hover {
@@ -116,4 +119,20 @@
 .card-progress {
   border-radius: 4px;
   height: 4px;
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .task-card-title {
+    font-size: 0.88rem;
+  }
+
+  .task-card-body {
+    padding: 8px 10px 10px 4px;
+  }
+
+  .drag-handle {
+    padding: 0 6px;
+    font-size: 1.1rem;
+  }
 }

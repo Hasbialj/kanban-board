@@ -1,12 +1,13 @@
 .kanban-column {
-  min-width: 280px;
-  max-width: 300px;
-  flex: 0 0 280px;
+  min-width: 270px;
+  max-width: 290px;
+  flex: 0 0 270px;
   background: var(--ion-color-light);
   border-radius: 12px;
   display: flex;
   flex-direction: column;
-  max-height: calc(100vh - 160px);
+  /* tinggi dinamis — kolom scroll sendiri */
+  max-height: calc(100dvh - 180px);
   transition: background 0.2s;
 }
 
@@ -23,6 +24,7 @@
   padding: 12px 12px 10px 12px;
   border-top: 3px solid transparent;
   border-radius: 12px 12px 0 0;
+  flex-shrink: 0;
 }
 
 .column-title-row {
@@ -30,6 +32,7 @@
   align-items: center;
   gap: 8px;
   flex: 1;
+  min-width: 0;
 }
 
 .column-dot {
@@ -43,6 +46,9 @@
   font-weight: 700;
   font-size: 0.95rem;
   color: var(--ion-text-color);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .column-count {
@@ -50,6 +56,7 @@
   border-radius: 10px;
   padding: 2px 8px;
   color: white !important;
+  flex-shrink: 0;
 }
 
 .add-task-btn {
@@ -59,15 +66,12 @@
   flex-shrink: 0;
 }
 
-.add-task-btn:hover {
-  --color: var(--ion-color-primary);
-}
-
 .column-body {
   flex: 1;
   overflow-y: auto;
   padding: 8px 10px 10px 10px;
-  min-height: 60px;
+  min-height: 80px;
+  -webkit-overflow-scrolling: touch;
 }
 
 .column-body::-webkit-scrollbar {
@@ -87,7 +91,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 60px;
+  height: 70px;
   border: 2px dashed var(--ion-color-light-shade);
   border-radius: 8px;
   color: var(--ion-color-medium);
@@ -95,10 +99,26 @@
   margin-top: 4px;
 }
 
-@media (max-width: 600px) {
+/* Tablet */
+@media (max-width: 768px) {
   .kanban-column {
     min-width: 240px;
-    max-width: 260px;
+    max-width: 255px;
     flex: 0 0 240px;
+    max-height: calc(100dvh - 200px);
+  }
+}
+
+/* Mobile kecil */
+@media (max-width: 480px) {
+  .kanban-column {
+    min-width: 220px;
+    max-width: 235px;
+    flex: 0 0 220px;
+    max-height: calc(100dvh - 210px);
+  }
+
+  .column-title {
+    font-size: 0.85rem;
   }
 }

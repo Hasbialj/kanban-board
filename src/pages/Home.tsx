@@ -191,7 +191,7 @@ const Home: React.FC = () => {
               <IonLabel>🔴 High</IonLabel>
             </IonSegmentButton>
             <IonSegmentButton value="medium">
-              <IonLabel>🟡 Medium</IonLabel>
+              <IonLabel>🟡 Med</IonLabel>
             </IonSegmentButton>
             <IonSegmentButton value="low">
               <IonLabel>🟢 Low</IonLabel>

@@ -118,3 +118,18 @@
 .task-form {
   padding-bottom: 24px;
 }
+
+/* Mobile */
+@media (max-width: 480px) {
+  .task-modal {
+    --height: 95%;
+  }
+
+  .task-view-header h2 {
+    font-size: 1.1rem;
+  }
+
+  .subtask-add-row {
+    flex-wrap: nowrap;
+  }
+}

@@ -24,13 +24,12 @@
   --background: #f0f4f8;
 }
 
-/* Wrapper untuk horizontal scroll — Ionic IonContent scroll via inner div */
 .board-scroll-wrapper {
   display: flex;
   flex-direction: row;
   gap: 16px;
   padding: 16px;
-  min-height: calc(100vh - 210px);
+  min-height: 100%;
   align-items: flex-start;
   width: max-content;
   min-width: 100%;
@@ -49,14 +48,22 @@
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
   pointer-events: none;
-  width: 280px;
+  width: 260px;
 }
 
-/* Mobile */
+/* Tablet */
 @media (max-width: 768px) {
   .board-scroll-wrapper {
-    padding: 12px;
-    gap: 12px;
+    padding: 10px;
+    gap: 10px;
+  }
+}
+
+/* Mobile kecil — segment label lebih ringkas */
+@media (max-width: 480px) {
+  .board-scroll-wrapper {
+    padding: 8px;
+    gap: 8px;
   }
 }
 
