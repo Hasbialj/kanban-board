@@ -102,7 +102,9 @@
 
 .subtask-input {
   flex: 1;
-  --background: white;
+  --background: var(--ion-item-background, var(--ion-background-color, #fff));
+  --color: var(--ion-text-color);
+  --placeholder-color: var(--ion-color-medium);
   --padding-start: 10px;
   border-radius: 6px;
   border: 1px solid var(--ion-color-light-shade);
